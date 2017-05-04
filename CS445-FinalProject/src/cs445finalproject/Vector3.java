@@ -119,4 +119,10 @@ public class Vector3 {
         v.z -= scaler;
         return v;
     }
+    
+    public static Vector3 lerp(Vector3 a, Vector3 b, float t) {
+        Vector3 aa = a.multiply(1 - t);
+        Vector3 bb = b.multiply(t);
+        return aa.add(bb);
+    }
 }

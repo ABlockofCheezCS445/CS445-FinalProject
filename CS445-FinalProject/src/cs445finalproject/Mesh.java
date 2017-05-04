@@ -1,7 +1,7 @@
 /***************************************************************
 * File: Mesh.java
 * Authors: Mario Garcia, [plz put yo names here]
-* Class: CS 141 – Programming and Problem Solving
+* Class: CS 445
 *
 * assignment: Final Project
 * date last modified: 5/4/2017

@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************
+* File: RenderEngine.java
+* Authors: Mario Garcia, [plz put yo names here]
+* Class: CS 445
+*
+* assignment: Final Project
+* date last modified: 5/4/2017
+*
+* purpose: RenderEngine is an object that handles most of the OpenGL
+* calls, while also dealing with window display and syncing.
+*
+****************************************************************/
 package cs445finalproject;
 
 
@@ -115,7 +122,11 @@ public class RenderEngine {
             Mesh mesh = commandlist.get(i);
             if (mesh.renderable) {
                 glPushMatrix();
-                glTranslatef(mesh.position.x, mesh.position.y, mesh.position.z);
+                // OpenGL 1.1 does not have very helpful coordinate system,
+                // rotating our camera turns everything mushy, so we need
+                // to predefine our coordinates in order to easily visualize it.
+                glTranslatef(-mesh.position.x, mesh.position.y, -mesh.position.z);
+                // Rotate...
                 glScalef(mesh.scale.x, mesh.scale.y, mesh.scale.z);
                 mesh.draw();
                 glPopMatrix();
@@ -180,8 +191,15 @@ public class RenderEngine {
         if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
             mainCamera.move(Camera.Movement.BACK);
         }
+        if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+            mainCamera.move(Camera.Movement.UP);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+            mainCamera.move(Camera.Movement.DOWN);
+        }
         // Check the main camera position.
-        System.out.println("Camera pos: x:" + mainCamera.position.x + " y: " 
-                + mainCamera.position.y + " z: " + mainCamera.position.z);
+        Vector3 camPos = mainCamera.getPosition();
+        System.out.println("Camera pos: x:" + camPos.x + " y: " 
+                + camPos.y + " z: " + camPos.z);
     }
 }

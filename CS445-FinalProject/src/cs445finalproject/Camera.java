@@ -29,9 +29,11 @@ import static org.lwjgl.opengl.GL11.*;
 public class Camera {
     public enum Movement { LEFT, RIGHT, UP, DOWN, FORWARD, BACK };
     /**
-     * The current position of the camera in world space.
+     * The current position of the camera in world space. Our Y value is 
+     * flipped for some reason in OpenGL 1.1, so we need to un-flip that 
+     * in order to get the true position of our camera in world coordinates.
      */
-    public Vector3 position;
+    private Vector3 position;
     
     /**
      * Front vector of this camera in model space.
@@ -100,9 +102,9 @@ public class Camera {
         up = right.cross(front).normalize();
         
         // Change our view and projection matrices.
-        glRotatef(pitch, 1.0f, 0.0f, 0.0f);
         // our yaw is projected differently in OpenGL 1.1, so we need to compensate.
-        glRotatef(yaw - 90.0f, 0.0f, 1.0f, 0.0f);        
+        glRotatef(pitch, 1.0f, 0.0f, 0.0f);   
+        glRotatef(yaw - 90.0f, 0.0f, 1.0f, 0.0f);    
         glTranslatef(position.x, position.y, position.z);
     }
     
@@ -122,13 +124,15 @@ public class Camera {
             } break;
             case UP:
             {
+                // NOTE(): this is unethical.
                 Vector3 u = up.multiply(velocity);
-                position = position.add(u);
+                position = position.subtract(u);
             } break;
             case DOWN:
             {
+                // NOTE(): this is unethical.
                 Vector3 u = up.multiply(velocity);
-                position = position.subtract(u);
+                position = position.add(u);
             } break;
             case FORWARD:
             {
@@ -170,5 +174,13 @@ public class Camera {
                 pitch = -89.0f;
             }
         }
+    }
+
+    /**
+     * method: getPosition
+     * purpose: Returns the proper position of the camera in world coordinates.
+     */
+    public Vector3 getPosition() {
+        return new Vector3(position.x, -position.y, position.z);
     }
 }

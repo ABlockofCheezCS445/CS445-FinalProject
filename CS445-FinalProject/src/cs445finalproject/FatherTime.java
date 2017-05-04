@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************
+* File: FatherTime.java
+* Authors: Mario Garcia, [plz put yo names here]
+* Class: CS 445
+*
+* assignment: Final Project
+* date last modified: 5/4/2017
+*
+* purpose: FatherTime is just a singleton that keeps track of the time
+* between rendering frames and such. 
+*
+****************************************************************/
 package cs445finalproject;
 
 /**
@@ -38,5 +45,16 @@ public class FatherTime {
         double t = (double )System.currentTimeMillis() / 1000.0f;
         dt = t - lastTime;
         lastTime = t;
+    }
+    
+    
+    public static float smoothstep(float a0, float a1, float t) {
+        t = (t - a0) / (a1 - a0);
+        if (t > a1) {
+            t = a1;
+        } else if (t < a0) {
+            t = a0;
+        }
+        return t * t * (3.0f - 2.0f * t);
     }
 }
