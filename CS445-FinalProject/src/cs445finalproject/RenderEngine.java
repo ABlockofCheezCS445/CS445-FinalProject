@@ -1,9 +1,9 @@
 /***************************************************************
 * File: RenderEngine.java
-* Authors: Mario Garcia, [plz put yo names here]
-* Class: CS 445
+* Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
+* Class: CS445 - Computer Graphics
 *
-* assignment: Final Project
+* assignment: Final Project - Checkpoint Assignment # 1
 * date last modified: 5/4/2017
 *
 * purpose: RenderEngine is an object that handles most of the OpenGL
@@ -120,13 +120,16 @@ public class RenderEngine {
         
         for (int i = 0; i < commandlist.size(); ++i) {
             Mesh mesh = commandlist.get(i);
+            mesh.update();
             if (mesh.renderable) {
+                Vector3 axis = mesh.rotationAxis();
                 glPushMatrix();
                 // OpenGL 1.1 does not have very helpful coordinate system,
                 // rotating our camera turns everything mushy, so we need
                 // to predefine our coordinates in order to easily visualize it.
                 glTranslatef(-mesh.position.x, mesh.position.y, -mesh.position.z);
                 // Rotate...
+                glRotatef(mesh.getRotationDeg(), axis.x, axis.y, axis.z);
                 glScalef(mesh.scale.x, mesh.scale.y, mesh.scale.z);
                 mesh.draw();
                 glPopMatrix();

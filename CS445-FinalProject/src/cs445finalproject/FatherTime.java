@@ -1,9 +1,9 @@
 /***************************************************************
 * File: FatherTime.java
-* Authors: Mario Garcia, [plz put yo names here]
-* Class: CS 445
+* Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
+* Class: CS445 - Computer Graphics
 *
-* assignment: Final Project
+* assignment: Final Project - Checkpoint Assignment # 1
 * date last modified: 5/4/2017
 *
 * purpose: FatherTime is just a singleton that keeps track of the time
@@ -48,6 +48,11 @@ public class FatherTime {
     }
     
     
+    /**
+     * method: smoothstep
+     * purpose: Allows linear interpolation with a smoother traverse along
+     * the line.
+     */
     public static float smoothstep(float a0, float a1, float t) {
         t = (t - a0) / (a1 - a0);
         if (t > a1) {

@@ -1,9 +1,9 @@
 /***************************************************************
 * File: Cube.java
-* Authors: Mario Garcia, [plz put yo names here]
-* Class: CS 141 – Programming and Problem Solving
+* Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
+* Class: CS445 - Computer Graphics
 *
-* assignment: program 1
+* assignment: Final Project - Checkpoint Assignment # 1
 * date last modified: 3/20/2112
 *
 * purpose: The cube mesh object.

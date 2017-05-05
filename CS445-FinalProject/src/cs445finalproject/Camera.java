@@ -1,9 +1,9 @@
 /***************************************************************
 * File: Camera.java
-* Authors: Mario Garcia, [plz put yo names here]
-* Class: CS 141 – Programming and Problem Solving
+* Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
+* Class: CS445 - Computer Graphics
 *
-* assignment: Final Project
+* assignment: Final Project - Checkpoint Assignment # 1
 * date last modified: 5/4/2017
 *
 * purpose: Camera object that keeps track of the view, projection, and clip
@@ -109,6 +109,10 @@ public class Camera {
     }
     
     
+    /**
+     * method: move
+     * purpose: moves the camera position based on where you wish.
+     */
     public void move(Movement movement) {
         float velocity = speed * (float )FatherTime.deltaTime();
         switch (movement) {

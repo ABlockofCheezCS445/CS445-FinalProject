@@ -1,9 +1,9 @@
 /***************************************************************
 * File: Vector3.java
-* Authors: Mario Garcia, [plz put yo names here]
-* Class: CS 141 – Programming and Problem Solving
+* Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
+* Class: CS445 - Computer Graphics
 *
-* assignment: Final Project
+* assignment: Final Project - Checkpoint Assignment # 1
 * date last modified: 5/4/2017
 *
 * purpose: Vector object used for the mathematics of the RenderEngine, as well
@@ -39,6 +39,10 @@ public class Vector3 {
         this(0.0f, 0.0f, 0.0f);
     }
     
+    public float magnitude() {
+        return (float )Math.sqrt((x * x) + (y * y) + (z * z));
+    }
+    
     /**
      * method: normalize.
      * purpose: Normalize our vector back to unit length. Useful for if you only need 
@@ -48,7 +52,7 @@ public class Vector3 {
      */
     public Vector3 normalize() {
         Vector3 newVec = new Vector3(x, y, z);
-        float mag = (float )Math.sqrt((x * x) + (y * y) + (z * z));
+        float mag = magnitude();
         if (mag > 0) {
             newVec = newVec.divide(mag);
         }
@@ -84,6 +88,10 @@ public class Vector3 {
     }
    
     
+    /**
+     * method: dot
+     * purpose: calculate the dot product between this vector and the other.
+     */
     public float dot(Vector3 other) {
         return (x * other.x) + (y * other.y) + (z * other.z);
     }
