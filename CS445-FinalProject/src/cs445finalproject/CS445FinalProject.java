@@ -12,6 +12,8 @@
 ****************************************************************/
 package cs445finalproject;
 
+import org.lwjgl.opengl.GL33;
+
 /**
  *
  * @author alexa
@@ -34,15 +36,20 @@ public class CS445FinalProject {
 
         Cube cube = new Cube();
         cube.initialize();
+        cube.showLocalSpace = true;
+        //cube.rotation.x = 45.0f;
        
+        float t = 0f;
         while (engine.isRunning()) {
             FatherTime.updateTime();
             
             engine.update();
             // Push Mesh calls in here.
             engine.push(cube);
-            
+            cube.rotation.x = t;
+            cube.rotation.z = t;
             engine.render();
+            t += 100.0f * (float ) FatherTime.deltaTime();
         }
         
         engine.cleanUp();

@@ -44,12 +44,6 @@ public abstract class Mesh {
     public Vector3 rotation;
     
     /**
-     * Degree in radians to rotate the mesh object about the x axis.
-     */
-    private float deg;
-    private Vector3 axis;
-    
-    /**
      * Checks if this mesh object is renderable. If true, the render engine will
      * draw this mesh onto the screen. If false, the render engine will ignore
      * this mesh object.
@@ -65,10 +59,8 @@ public abstract class Mesh {
         renderable = true;
         position = new Vector3();
         scale = new Vector3(1.0f, 1.0f, 1.0f);
-        axis = new Vector3(0.0f, 0.0f, 0.0f);
         showLocalSpace = false;
-        rotation = FRONT;
-        deg = 0.0f;
+        rotation = new Vector3();
     }
     
     
@@ -84,35 +76,5 @@ public abstract class Mesh {
      * purpose: describes how to initialize our mesh object.
      */
     public abstract void initialize();
-    
-    
-    /**
-     * method: update.
-     * purpose: updates the mesh object's transforms.
-     */
-    public void update() {
-        // TODO(Garcia): Rotations work! BUT, they only account to the forward
-        // vector! This can be problematic when trying to rotate one axis at a time.
-        // Separate this!
-        float val = rotation.dot(FRONT) / (FRONT.magnitude() * rotation.magnitude());
-        deg = (float )Math.toDegrees(Math.acos(val));
-        axis = rotation.cross(FRONT).normalize();
-    }
-    
-    
-    /**
-     * method: rotationAxis
-     * purpose: get the rotation axis of this mesh.
-     */
-    public Vector3 rotationAxis() {
-        return axis;
-    }
-    
-    /**
-     * method: getRotationDeg
-     * purpose: get the rotation degree.
-     */
-    public float getRotationDeg() {
-        return deg;
-    }
+
 }

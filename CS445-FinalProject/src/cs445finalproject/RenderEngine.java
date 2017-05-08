@@ -120,16 +120,16 @@ public class RenderEngine {
         
         for (int i = 0; i < commandlist.size(); ++i) {
             Mesh mesh = commandlist.get(i);
-            mesh.update();
             if (mesh.renderable) {
-                Vector3 axis = mesh.rotationAxis();
                 glPushMatrix();
                 // OpenGL 1.1 does not have very helpful coordinate system,
                 // rotating our camera turns everything mushy, so we need
                 // to predefine our coordinates in order to easily visualize it.
                 glTranslatef(-mesh.position.x, mesh.position.y, -mesh.position.z);
                 // Rotate...
-                glRotatef(mesh.getRotationDeg(), axis.x, axis.y, axis.z);
+                glRotatef(mesh.rotation.x, 1.0f, 0.0f, 0.0f);
+                glRotatef(mesh.rotation.y, 0.0f, 1.0f, 0.0f);
+                glRotatef(mesh.rotation.z, 0.0f, 0.0f, 1.0f);
                 glScalef(mesh.scale.x, mesh.scale.y, mesh.scale.z);
                 mesh.draw();
                 if (mesh.showLocalSpace) {
