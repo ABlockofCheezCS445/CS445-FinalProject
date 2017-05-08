@@ -132,6 +132,9 @@ public class RenderEngine {
                 glRotatef(mesh.getRotationDeg(), axis.x, axis.y, axis.z);
                 glScalef(mesh.scale.x, mesh.scale.y, mesh.scale.z);
                 mesh.draw();
+                if (mesh.showLocalSpace) {
+                    drawLocalSpace();
+                }
                 glPopMatrix();
             }
         }
@@ -182,16 +185,16 @@ public class RenderEngine {
     }
     
     private void moveCamera() {
-        if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
             mainCamera.move(Camera.Movement.LEFT);
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
             mainCamera.move(Camera.Movement.RIGHT);
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) {
             mainCamera.move(Camera.Movement.FORWARD);
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
             mainCamera.move(Camera.Movement.BACK);
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
@@ -201,8 +204,34 @@ public class RenderEngine {
             mainCamera.move(Camera.Movement.DOWN);
         }
         // Check the main camera position.
-        Vector3 camPos = mainCamera.getPosition();
-        System.out.println("Camera pos: x:" + camPos.x + " y: " 
-                + camPos.y + " z: " + camPos.z);
+        //Vector3 camPos = mainCamera.getPosition();
+        //System.out.println("Camera pos: x:" + camPos.x + " y: " 
+        //        + camPos.y + " z: " + camPos.z);
+    }
+    
+    /**
+     * method: drawLocalSpace
+     * purpose: Draws a mesh object's local space coordinates for debugging.
+     */
+    private void drawLocalSpace() {
+        glLineWidth(5.0f);
+        glBegin(GL_LINES);
+            glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+            glVertex3f(-Mesh.FRONT.x * 2, 
+                Mesh.FRONT.y * 2, 
+                -Mesh.FRONT.z * 2);
+            glVertex3f(0.0f, 0.0f, 0.0f);
+            glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+            glVertex3f(0.0f, 0.0f, 0.0f);
+            glVertex3f(-Mesh.UP.x * 2, 
+                Mesh.UP.y * 2, 
+                -Mesh.UP.z * 2);
+            glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+            glVertex3f(0.0f, 0.0f, 0.0f);
+            glVertex3f(-Mesh.RIGHT.x * 2, 
+                Mesh.RIGHT.y * 2, 
+                -Mesh.RIGHT.z * 2);
+        glEnd();
+        glLineWidth(1.0f);
     }
 }

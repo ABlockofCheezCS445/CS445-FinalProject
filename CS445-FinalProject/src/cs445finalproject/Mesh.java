@@ -25,6 +25,8 @@ import java.util.List;
  */
 public abstract class Mesh {
     public static final Vector3 FRONT = new Vector3(0.0f, 0.0f, -1.0f).normalize();
+    public static final Vector3 UP = new Vector3(0.0f, 1.0f, 0.0f).normalize();
+    public static final Vector3 RIGHT = new Vector3(1.0f, 0.0f, 0.0f).normalize();
     
     /**
      * The position of the Mesh object in world space coordinates.
@@ -54,11 +56,17 @@ public abstract class Mesh {
      */
     public boolean renderable;
     
+    /**
+     * local space coordinates are drawn if true.
+     */
+    public boolean showLocalSpace;
+    
     Mesh() {
         renderable = true;
         position = new Vector3();
         scale = new Vector3(1.0f, 1.0f, 1.0f);
         axis = new Vector3(0.0f, 0.0f, 0.0f);
+        showLocalSpace = false;
         rotation = FRONT;
         deg = 0.0f;
     }
@@ -83,6 +91,9 @@ public abstract class Mesh {
      * purpose: updates the mesh object's transforms.
      */
     public void update() {
+        // TODO(Garcia): Rotations work! BUT, they only account to the forward
+        // vector! This can be problematic when trying to rotate one axis at a time.
+        // Separate this!
         float val = rotation.dot(FRONT) / (FRONT.magnitude() * rotation.magnitude());
         deg = (float )Math.toDegrees(Math.acos(val));
         axis = rotation.cross(FRONT).normalize();

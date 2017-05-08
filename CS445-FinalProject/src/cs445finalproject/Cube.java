@@ -48,6 +48,8 @@ public class Cube extends Mesh {
 
     @Override
     public void initialize() {
+        // TODO(Anyone): Subject to change to QUADS. However, rendering is much
+        // more optimal with TRIANGLES instead.
         float[] vertices = new float[] {
             // Front
             -1.0f, -1.0f, 1.0f,
@@ -123,21 +125,21 @@ public class Cube extends Mesh {
             0.0f, 1.0f, 1.0f,
             0.0f, 1.0f, 1.0f,
             
-            1.0f, 0.0f, 0.0f,
-            1.0f, 0.0f, 0.0f,
-            1.0f, 0.0f, 0.0f,
-            
-            1.0f, 0.0f, 0.0f, 
-            1.0f, 0.0f, 0.0f,
-            1.0f, 0.0f, 0.0f,
-            
             0.0f, 1.0f, 0.0f,
             0.0f, 1.0f, 0.0f,
             0.0f, 1.0f, 0.0f,
             
+            0.0f, 1.0f, 0.0f, 
             0.0f, 1.0f, 0.0f,
             0.0f, 1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
+            
+            1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
+            
+            1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
             
             0.0f, 0.0f, 1.0f,
             0.0f, 0.0f, 1.0f,

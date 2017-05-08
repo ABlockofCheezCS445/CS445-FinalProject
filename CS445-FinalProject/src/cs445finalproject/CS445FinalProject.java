@@ -22,21 +22,19 @@ public class CS445FinalProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        RenderEngine engine = new RenderEngine();
+        RenderEngine engine = new RenderEngine(640, 480);
         Camera camera = new Camera();
         
         // Initialize the engine.
         engine.initialize();
         engine.start();
         
-        Vector3 n = new Vector3(100f, 100f, 100f).normalize();
-        
         engine.setMainCamera(camera);
         camera.setPosition(new Vector3(0.0f, 0.0f, 10.0f));
 
         Cube cube = new Cube();
         cube.initialize();
-        
+       
         while (engine.isRunning()) {
             FatherTime.updateTime();
             
