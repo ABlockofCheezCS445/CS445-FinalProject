@@ -4,7 +4,7 @@
 * Class: CS445 - Computer Graphics
 *
 * assignment: Final Project - Checkpoint Assignment # 1
-* date last modified: 5/4/2017
+* date last modified: 5/8/2017
 *
 * purpose: Standard mesh abstract object. This object holds the transform, as 
 * well as the position, of meshes in world space. The renderer uses this as

@@ -4,7 +4,7 @@
 * Class: CS445 - Computer Graphics
 *
 * assignment: Final Project - Checkpoint Assignment # 1
-* date last modified: 5/4/2017
+* date last modified: 5/8/2017
 *
 * purpose: RenderEngine is an object that handles most of the OpenGL
 * calls, while also dealing with window display and syncing.
@@ -24,7 +24,6 @@ import org.lwjgl.input.Mouse;
 
 /**
  * Rendering engine that handles all of the OpenGL calls.
- * @author alexa
  */
 public class RenderEngine {
     public static final String PROJECT_TITLE = "CS445 Final Project Checkpoint 1";
@@ -62,8 +61,13 @@ public class RenderEngine {
     }
     
     
+    /**
+     * method: initWindow
+     * purpose: Initialize the window screen for rendering in OpenGL.
+     */
     private void initWindow() {
         try {
+            Display.setFullscreen(false);
             Display.setDisplayMode(displayMode);
             Display.setTitle(PROJECT_TITLE);
             
@@ -74,6 +78,11 @@ public class RenderEngine {
     }
     
     
+    /**
+     * method: initGL
+     * purpose: Initialize OpenGL coordinate spaces, along with any features
+     * that need to be configured before actual rendering.
+     */
     private void initGL() {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glMatrixMode(GL_PROJECTION);
@@ -92,6 +101,12 @@ public class RenderEngine {
         glFrontFace(GL_CW);
     }
     
+    
+    /**
+     * method: initialize
+     * purpose: Initialize the engine by performing display initialization and
+     * OpenGL initialization.
+     */
     public void initialize() {
         initWindow();
         initGL();
@@ -107,13 +122,19 @@ public class RenderEngine {
     
     
     /**
-     * Check if this engine is running.
-     * @return 
+     * method: isRunning
+     * purpose: Checks if this engine is running.
      */
     public boolean isRunning() {
         return running && !Display.isCloseRequested();
     }
     
+    
+    /**
+     * method: render
+     * purpose: Renders the whole scene based on what was pushed into the 
+     * command list. This is where our rendering algorithm takes place.
+     */
     public void render() {
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -146,15 +167,30 @@ public class RenderEngine {
     }
     
     
+    /**
+     * method: push
+     * purpose: Pushes the mesh object into our rendering engine's command list
+     * for rendering.
+     */
     public void push(Mesh mesh) {
         commandlist.add(mesh);
     }
     
     
+    /**
+     * method: setMainCamera
+     * purpose: Set the main camera to obtain our View Projection matrices.
+     */
     public void setMainCamera(Camera c) {
         mainCamera = c;
     }
     
+    
+    /**
+     * method: update
+     * purpose: Updates the engine configurations, including the camera position.
+     * It also handles any keyboard and mouse values.
+     */
     public void update() {
         glLoadIdentity();
         // update the camera, if there is one.
@@ -177,6 +213,10 @@ public class RenderEngine {
     }
     
     
+    /**
+     * method: checkCloseSignal
+     * purpose: Checks if the render engine is signaled to close.
+     */
     public void checkCloseSignal() {
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
             // signal that we are closing.
@@ -184,6 +224,11 @@ public class RenderEngine {
         }
     }
     
+    
+    /**
+     * method: moveCamera
+     * purpose: Moves the camera externally, by registering keyboard input.
+     */
     private void moveCamera() {
         if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
             mainCamera.move(Camera.Movement.LEFT);

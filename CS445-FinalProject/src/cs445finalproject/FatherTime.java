@@ -4,7 +4,7 @@
 * Class: CS445 - Computer Graphics
 *
 * assignment: Final Project - Checkpoint Assignment # 1
-* date last modified: 5/4/2017
+* date last modified: 5/8/2017
 *
 * purpose: FatherTime is just a singleton that keeps track of the time
 * between rendering frames and such. 

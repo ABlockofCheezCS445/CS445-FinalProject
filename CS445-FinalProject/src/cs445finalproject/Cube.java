@@ -4,9 +4,10 @@
 * Class: CS445 - Computer Graphics
 *
 * assignment: Final Project - Checkpoint Assignment # 1
-* date last modified: 3/20/2112
+* date last modified: 5/8/2017
 *
-* purpose: The cube mesh object.
+* purpose: The cube mesh object. This object identifies the cube and
+* it's normalized size in local space.
 *
 ****************************************************************/
 package cs445finalproject;
@@ -33,6 +34,11 @@ public class Cube extends Mesh {
         colorVBO = -1;
     }
 
+    
+    /**
+     * method: draw
+     * purpose: Draws our cube on screen.
+     */
     @Override
     public void draw() {
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
@@ -46,6 +52,11 @@ public class Cube extends Mesh {
         GL11.glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 
+    
+    /**
+     * method: initialize
+     * purpose: Initialize our buffers for rendering first!
+     */
     @Override
     public void initialize() {
         // TODO(Anyone): Subject to change to QUADS. However, rendering is much
@@ -155,9 +166,6 @@ public class Cube extends Mesh {
         FloatBuffer flo = BufferUtils.createFloatBuffer(vertices.length);
         FloatBuffer color = BufferUtils.createFloatBuffer(colorVertices.length);
         
-        //flo.put(new float[] {-1.0f, -1.0f, 1.0f,});
-        //flo.put(new float[] {-1.0f,  1.0f, 1.0f,});
-        //flo.put(new float[] { 1.0f,  1.0f, 1.0f,});
         flo.put(vertices);
         color.put(colorVertices);
         flo.flip();

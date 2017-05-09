@@ -4,7 +4,7 @@
 * Class: CS445 - Computer Graphics
 *
 * assignment: Final Project - Checkpoint Assignment # 1
-* date last modified: 5/4/2017
+* date last modified: 5/8/2017
 *
 * purpose: Camera object that keeps track of the view, projection, and clip
 * spaces in rendering.
