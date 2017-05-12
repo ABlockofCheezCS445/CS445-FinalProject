@@ -3,7 +3,7 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 1
+* assignment: Final Project - Checkpoint Assignment # 2
 * date last modified: 5/8/2017
 *
 * purpose: RenderEngine is an object that handles most of the OpenGL
@@ -94,11 +94,15 @@ public class RenderEngine {
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
         // For depth and 3D.
         glEnable(GL_DEPTH_TEST);
-        
+        glEnable(GL_TEXTURE_2D);
         // Cull mode to save 50% of performance.
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
         glFrontFace(GL_CW);
+        
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     }
     
     

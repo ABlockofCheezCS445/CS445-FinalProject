@@ -3,7 +3,7 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 1
+* assignment: Final Project - Checkpoint Assignment # 2
 * date last modified: 5/8/2017
 *
 * purpose: Standard mesh abstract object. This object holds the transform, as 
@@ -39,7 +39,8 @@ public abstract class Mesh {
     public Vector3 scale;
     
     /**
-     * The front vector of the object in world space.
+     * The rotation representation of the mesh. X component represents
+     * yaw, Y component represents pitch, and Z component represents roll.
      */
     public Vector3 rotation;
     

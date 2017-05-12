@@ -3,7 +3,7 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 1
+* assignment: Final Project - Checkpoint Assignment # 2
 * date last modified: 5/8/2017
 *
 * purpose: Camera object that keeps track of the view, projection, and clip
@@ -186,5 +186,9 @@ public class Camera {
      */
     public Vector3 getPosition() {
         return new Vector3(position.x, -position.y, position.z);
+    }
+    
+    public float getSpeed() {
+        return speed;
     }
 }

@@ -3,7 +3,7 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 1
+* assignment: Final Project - Checkpoint Assignment # 2
 * date last modified: 5/8/2017
 *
 * purpose: Main output program, where we set up the RenderEngine, initialize it, 
@@ -34,10 +34,13 @@ public class CS445FinalProject {
         engine.setMainCamera(camera);
         camera.setPosition(new Vector3(0.0f, 0.0f, 10.0f));
 
-        Cube cube = new Cube();
-        cube.initialize();
-        cube.showLocalSpace = true;
+        //Cube cube = new Cube();
+        //cube.initialize();
+        //cube.showLocalSpace = true;
         //cube.rotation.x = 45.0f;
+        
+        Chunk chunk = new Chunk();
+        chunk.initialize();
        
         float t = 0f;
         while (engine.isRunning()) {
@@ -45,9 +48,8 @@ public class CS445FinalProject {
             
             engine.update();
             // Push Mesh calls in here.
-            engine.push(cube);
-            cube.rotation.x = t;
-            cube.rotation.z = t;
+            //engine.push(cube);
+            engine.push(chunk);
             engine.render();
             t += 100.0f * (float ) FatherTime.deltaTime();
         }
