@@ -76,7 +76,7 @@ public class Camera {
      * purpose: Sets the position of the camera.
      */
     public void setPosition(Vector3 pos) {
-        position = pos;
+        position = new Vector3(pos.x, -pos.y, pos.z);
     }
     
     /**

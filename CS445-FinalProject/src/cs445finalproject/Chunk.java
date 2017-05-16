@@ -6,8 +6,8 @@
 * assignment: Final Project - Checkpoint Assignment # 2
 * date last modified: 5/12/2017
 *
-* purpose: FatherTime is just a singleton that keeps track of the time
-* between rendering frames and such. 
+* purpose: Chunk defines the overall layout of a huge mass of
+* cubes and their materials and textures. 
 *
 ****************************************************************/
 package cs445finalproject;
@@ -17,6 +17,7 @@ import java.nio.FloatBuffer;
 import java.util.Random;
 import org.lwjgl.BufferUtils;
 import static org.lwjgl.opengl.GL11.*;
+import org.lwjgl.opengl.GL15;
 import static org.lwjgl.opengl.GL15.*;
 
 import org.newdawn.slick.opengl.Texture;
@@ -24,22 +25,47 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 /**
- *
- * @author alexa
+ * Chunk is exactly what it is. It is a large
+ * mass of cubes, all wrapped up into one layout
+ * to define our voxel map.
  */
 public class Chunk extends Mesh {
+    /**
+     * The chunk size in cubes.
+     */
     private static final int CHUNK_SIZE = 30;
+    /**
+     * The overall length of the cube.
+     */
     private static final int CUBE_LENGTH = 2;
     
+    /**
+     * The block mass that defines this chunk. This is
+     * where all of the blocks and their information go.
+     */
     private Block[][][] Blocks;
     
+    /**
+     * OpenGL handles.
+     */
     private int VBOVertexHandle;
     private int VBOColorHandle;
     private int VBOTextureHandle;
+    
+    /**
+     * The texture of each cube in our chunk.
+     */
     private Texture texture;
 
+    /**
+     * Random generator used for our chunk generation.
+     */
     private Random r;
     
+    /**
+     * method: draw
+     * purpose: draws our chunk into the render engine.
+     */
     @Override
     public void draw() {
         texture.bind();
@@ -57,13 +83,15 @@ public class Chunk extends Mesh {
                 CHUNK_SIZE * CHUNK_SIZE  * CHUNK_SIZE * 24);
     }
 
+    /**
+     * method: initialize
+     * purpose: initializes the chunk object, by generating the terrain and 
+     * whatnot.
+     */
     @Override
     public void initialize() {
         r = new Random();
-        /*
-          TODO(): We need to implement our simple noise here! This is where
-            we will be able to get our appropriate structure.
-         */
+
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
         for (int x = 0; x < CHUNK_SIZE; ++x) {
             for (int y = 0; y < CHUNK_SIZE; ++y) {
@@ -98,8 +126,12 @@ public class Chunk extends Mesh {
     }
     
     
+    /**
+     * method: rebuildMesh
+     * purpose: rebuilds the giant mesh object from scratch.
+     */
     public void rebuildMesh(float startX, float startY, float startZ) {
-        SimplexNoise noise = new SimplexNoise(100, 0.3, r.nextInt());
+        SimplexNoise noise = new SimplexNoise(100, 0.45f, r.nextInt());
         
         position = new Vector3(startX, startY, startZ);
         VBOColorHandle = glGenBuffers();
@@ -116,7 +148,7 @@ public class Chunk extends Mesh {
                         (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         for (float x = 0; x < CHUNK_SIZE; x += 1) {
             for (float z = 0; z < CHUNK_SIZE; z += 1) {
-                float height = Math.abs(startY + (int )(30 * noise.getNoise((int )x, (int )z)) * 1);
+                float height = Math.abs(startY + (int )(CHUNK_SIZE * noise.getNoise((int )x, (int )z)) * 1);
                 for (float y = 0; y <= height; y++) {
                     VertexPositionData.put(createCube(
                             (float )(startX + x * CUBE_LENGTH), 
@@ -126,6 +158,9 @@ public class Chunk extends Mesh {
                             getCubeColor(Blocks[(int )x][(int )y][(int )z])));
                     VertexTextureData.put(createTexCube(
                             (float )0, (float )0, Blocks[(int )x][(int )y][(int )z]));
+                    // TODO(): Check height and see if at some height n, we will
+                    // add in a block material to define layers in our terrain.
+                    // 
                 }
             }
         }
@@ -144,6 +179,10 @@ public class Chunk extends Mesh {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
     
+    /**
+     * method: createCubeVertexCol
+     * purpose: Creates our cube colors for each block in the chunk. 
+     */
     private float[] createCubeVertexCol(float[] CubeColorArray) {
         float[] cubeColors = new float[CubeColorArray.length * 4 * 6];
         for (int i = 0; i < cubeColors.length; ++i) {
@@ -153,6 +192,10 @@ public class Chunk extends Mesh {
     }
     
     
+    /**
+     * method: createCube
+     * purpose: Create our cube specifically.
+     */
     private static float[] createCube(float x, float y, float z) {
         int offset = CUBE_LENGTH / 2;
         return new float[] {
@@ -188,11 +231,18 @@ public class Chunk extends Mesh {
         x + offset, y - offset, z };
     }
     
+    /**
+     * method: getCubeColor
+     * purpose: Get our cube color if there aren't any textures.
+     */
     private float[] getCubeColor(Block block) {
         return new float[] { 1, 1, 1 };
     }
     
-    
+    /**
+     * method: createTexCube
+     * purpose: Create our texture coordinates for our blocks.
+     */
     private float[] createTexCube(float x, float y, Block block) {
         float offset = (1024f/16)/1024f;
         switch (block.getID()) {
