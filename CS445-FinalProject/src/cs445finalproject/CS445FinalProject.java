@@ -24,7 +24,7 @@ public class CS445FinalProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        RenderEngine engine = new RenderEngine(640, 480);
+        RenderEngine engine = new RenderEngine(/*640, 480*/);
         Camera camera = new Camera();
         
         // Initialize the engine.

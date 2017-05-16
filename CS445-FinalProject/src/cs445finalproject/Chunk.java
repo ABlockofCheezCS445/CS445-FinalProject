@@ -116,7 +116,7 @@ public class Chunk extends Mesh {
                         (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         for (float x = 0; x < CHUNK_SIZE; x += 1) {
             for (float z = 0; z < CHUNK_SIZE; z += 1) {
-                float height = (startY + (int )(100 * noise.getNoise((int )x, (int )z)) * 1);
+                float height = Math.abs(startY + (int )(30 * noise.getNoise((int )x, (int )z)) * 1);
                 for (float y = 0; y <= height; y++) {
                     VertexPositionData.put(createCube(
                             (float )(startX + x * CUBE_LENGTH), 
