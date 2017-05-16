@@ -99,6 +99,8 @@ public class Chunk extends Mesh {
     
     
     public void rebuildMesh(float startX, float startY, float startZ) {
+        SimplexNoise noise = new SimplexNoise(100, 0.09, r.nextInt());
+        
         position = new Vector3(startX, startY, startZ);
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
@@ -114,7 +116,8 @@ public class Chunk extends Mesh {
                         (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         for (float x = 0; x < CHUNK_SIZE; x += 1) {
             for (float z = 0; z < CHUNK_SIZE; z += 1) {
-                for (float y = 0; y < CHUNK_SIZE; y++) {
+                float height = Math.abs(startY + (int )(100 * noise.getNoise((int )x, (int )z)) * 1);
+                for (float y = 0; y <= height; y++) {
                     VertexPositionData.put(createCube(
                             (float )(startX + x * CUBE_LENGTH), 
                             (float )(y * CUBE_LENGTH + (int )(CHUNK_SIZE * 0.8f)),
