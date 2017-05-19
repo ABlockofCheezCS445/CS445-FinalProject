@@ -3,8 +3,8 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 2
-* date last modified: 5/8/2017
+* assignment: Final Project - Checkpoint Assignment # 3
+* date last modified: 5/18/2017
 *
 * purpose: Vector object used for the mathematics of the RenderEngine, as well
 * as for our source code implementation.
@@ -21,21 +21,21 @@ public class Vector3 {
     public float y;
     public float z;
     
-    Vector3(float x, float y, float z) {
+    public Vector3(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
     
-    Vector3(float x, float y) {
+    public Vector3(float x, float y) {
         this(x, y, 0.0f);
     }
     
-    Vector3(float x) {
+    public Vector3(float x) {
         this(x, 0.0f, 0.0f);
     }
     
-    Vector3() {
+    public Vector3() {
         this(0.0f, 0.0f, 0.0f);
     }
     

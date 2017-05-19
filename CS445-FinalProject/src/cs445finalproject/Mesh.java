@@ -3,8 +3,8 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 2
-* date last modified: 5/8/2017
+* assignment: Final Project - Checkpoint Assignment # 3
+* date last modified: 5/18/2017
 *
 * purpose: Standard mesh abstract object. This object holds the transform, as 
 * well as the position, of meshes in world space. The renderer uses this as
@@ -13,6 +13,7 @@
 ****************************************************************/
 package cs445finalproject;
 
+import cs445finalproject.physics.RigidBody;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import java.util.List;
  * the screen
  */
 public abstract class Mesh {
+    public static final String DEFAULT_NAME = "Default mesh";
     public static final Vector3 FRONT = new Vector3(0.0f, 0.0f, -1.0f).normalize();
     public static final Vector3 UP = new Vector3(0.0f, 1.0f, 0.0f).normalize();
     public static final Vector3 RIGHT = new Vector3(1.0f, 0.0f, 0.0f).normalize();
@@ -56,12 +58,18 @@ public abstract class Mesh {
      */
     public boolean showLocalSpace;
     
+    /**
+     * the name of this mesh.
+     */
+    public String nameTag;
+    
     Mesh() {
         renderable = true;
         position = new Vector3();
         scale = new Vector3(1.0f, 1.0f, 1.0f);
         showLocalSpace = false;
         rotation = new Vector3();
+        nameTag = DEFAULT_NAME;
     }
     
     

@@ -3,8 +3,8 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 2
-* date last modified: 5/8/2017
+* assignment: Final Project - Checkpoint Assignment # 3
+* date last modified: 5/18/2017
 *
 * purpose: RenderEngine is an object that handles most of the OpenGL
 * calls, while also dealing with window display and syncing.
@@ -21,12 +21,13 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import cs445finalproject.physics.*;
 
 /**
  * Rendering engine that handles all of the OpenGL calls.
  */
 public class RenderEngine {
-    public static final String PROJECT_TITLE = "CS445 Final Project Checkpoint 1";
+    public static final String PROJECT_TITLE = "CS445 Final Project Checkpoint 3";
     public static final String ENGINE_NAME = "Git Gud Engine";
     
     /**
@@ -49,6 +50,9 @@ public class RenderEngine {
      * The command list used to render onto the screen.
      */
     private List<Mesh> commandlist;
+    
+    private Thread thr;
+   
     
     RenderEngine(int winx, int winy) {
         displayMode = new DisplayMode(winx, winy);

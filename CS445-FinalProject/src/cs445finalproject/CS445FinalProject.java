@@ -12,6 +12,8 @@
 ****************************************************************/
 package cs445finalproject;
 
+import cs445finalproject.physics.PhysicsEngine;
+import cs445finalproject.physics.RigidBody;
 import org.lwjgl.opengl.GL33;
 
 /**
@@ -25,6 +27,7 @@ public class CS445FinalProject {
      */
     public static void main(String[] args) {
         RenderEngine engine = new RenderEngine(640, 480);
+        PhysicsEngine.StartPhysics();
         Camera camera = new Camera();
         
         // Initialize the engine.
@@ -34,26 +37,39 @@ public class CS445FinalProject {
         engine.setMainCamera(camera);
         camera.setPosition(new Vector3(-20.0f, 50.0f, 10.0f));
 
-        //Cube cube = new Cube();
-        //cube.initialize();
+        Cube cube = new Cube();
+        cube.nameTag = "Ice Cube";
+        cube.position = new Vector3(-20.0f, 50.0f, 0.0f);
+        cube.initialize();
         //cube.showLocalSpace = true;
         //cube.rotation.x = 45.0f;
         
         Chunk chunk = new Chunk();
+        chunk.nameTag = "Dr. Dre";
         chunk.initialize();
-        float t = 0f;
+        
+        RigidBody cubebody = new RigidBody(cube);
+        RigidBody chunkbody = new RigidBody(chunk, 1000.0f);
+        chunkbody.kinetic = true; // set to true to prevent physics calculations.
+        
+
         while (engine.isRunning()) {
             FatherTime.updateTime();
-            
+            PhysicsEngine.runCalculations();
             engine.update();
+            
             // Push Mesh calls in here.
-            //engine.push(cube);
+            engine.push(cube);
             engine.push(chunk);
+            
+            // Start the rendering!
             engine.render();
-            t += 100.0f * (float ) FatherTime.deltaTime();
         }
         
         engine.cleanUp();
+        PhysicsEngine.Destroy();
+        System.out.println("Powered by: " + RenderEngine.ENGINE_NAME);
+        System.out.println("Physics provided by: " + PhysicsEngine.ENGINE_NAME);
     }
     
 }

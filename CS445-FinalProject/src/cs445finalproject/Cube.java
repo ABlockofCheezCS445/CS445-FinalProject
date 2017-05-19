@@ -27,12 +27,11 @@ import org.lwjgl.opengl.GL20;
  * @author alexa
  */
 public class Cube extends Mesh {
-    private int vbo, colorVBO, textureVBO;
+    private int vbo, colorVBO;
     
     public Cube() {
         vbo = -1;
         colorVBO = -1;
-        textureVBO = -1;
     }
 
     
@@ -42,18 +41,16 @@ public class Cube extends Mesh {
      */
     @Override
     public void draw() {
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, textureVBO);
-        glBindTexture(GL_TEXTURE_2D, 1);
-        
+        GL11.glDisableClientState(GL_TEXTURE_COORD_ARRAY);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
         GL11.glVertexPointer(3, GL_FLOAT, 0, 0l);
         
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, colorVBO);
         GL11.glColorPointer(3, GL_FLOAT, 0, 0l);
         
-        GL11.glEnableClientState(GL_VERTEX_ARRAY);
-        GL11.glEnableClientState(GL_COLOR_ARRAY);
-        GL11.glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        
+        GL11.glEnable(GL_TEXTURE_COORD_ARRAY);
     }
 
     
@@ -168,7 +165,6 @@ public class Cube extends Mesh {
         
         
         vbo = GL15.glGenBuffers();
-        textureVBO = GL15.glGenBuffers();
         colorVBO = GL15.glGenBuffers();
         FloatBuffer flo = BufferUtils.createFloatBuffer(vertices.length);
         FloatBuffer color = BufferUtils.createFloatBuffer(colorVertices.length);

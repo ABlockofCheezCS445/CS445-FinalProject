@@ -3,8 +3,8 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 2
-* date last modified: 5/12/2017
+* assignment: Final Project - Checkpoint Assignment # 3
+* date last modified: 5/18/2017
 *
 * purpose: Chunk defines the overall layout of a huge mass of
 * cubes and their materials and textures. 
