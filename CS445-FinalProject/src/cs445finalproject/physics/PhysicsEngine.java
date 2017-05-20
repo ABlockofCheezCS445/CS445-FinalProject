@@ -98,6 +98,21 @@ public class PhysicsEngine implements Runnable {
         rigidbody.linearVelocity.y += linearAcceleration.y * FatherTime.deltaTime();
         rigidbody.linearVelocity.z += linearAcceleration.z * FatherTime.deltaTime();
         
+        // TODO(Mario): 
+        // Check collisions (this will cause O(n^2) performance for each object,
+        // so technically O(n^3) at worst case, need to figure our how to prune!
+        if (rigidbody.collider != null) {
+            for (int i = 0; i < rigidBodies.size(); ++i) {
+                RigidBody other = rigidBodies.get(i);
+                if (other != rigidbody && other.collider != null) {
+                    if (rigidbody.collider.hasCollided(other.collider)) {
+                        System.out.println("Collision has occured!");
+                        rigidbody.linearVelocity.y = 0.0f;
+                    }
+                }
+            }
+        }
+        
         rigidbody.position.x += rigidbody.linearVelocity.x * FatherTime.deltaTime();
         rigidbody.position.y += rigidbody.linearVelocity.y * FatherTime.deltaTime();
         rigidbody.position.z += rigidbody.linearVelocity.z * FatherTime.deltaTime();

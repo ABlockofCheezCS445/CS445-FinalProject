@@ -31,6 +31,7 @@ public class RigidBody {
     public Vector3 position;
     public Vector3 force;
     public Mesh mesh;
+    public Collider collider;
     
     public boolean kinetic = false;
     
@@ -65,5 +66,9 @@ public class RigidBody {
     
     public void update() {
         mesh.position = position;
+    }
+    
+    public void addForce(Vector3 applied) {
+        force = force.add(applied);
     }
 }

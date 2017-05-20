@@ -12,8 +12,10 @@
 ****************************************************************/
 package cs445finalproject;
 
+import cs445finalproject.physics.BoxCollider;
 import cs445finalproject.physics.PhysicsEngine;
 import cs445finalproject.physics.RigidBody;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL33;
 
 /**
@@ -38,9 +40,13 @@ public class CS445FinalProject {
         camera.setPosition(new Vector3(-20.0f, 50.0f, 10.0f));
 
         Cube cube = new Cube();
+        Cube cube2 = new Cube();
         cube.nameTag = "Ice Cube";
         cube.position = new Vector3(-20.0f, 50.0f, 0.0f);
         cube.initialize();
+        
+        cube2.position = new Vector3(-20.0f, 45.0f, 0.0f);
+        cube2.initialize();
         //cube.showLocalSpace = true;
         //cube.rotation.x = 45.0f;
         
@@ -50,8 +56,13 @@ public class CS445FinalProject {
         
         RigidBody cubebody = new RigidBody(cube);
         RigidBody chunkbody = new RigidBody(chunk, 1000.0f);
-        chunkbody.kinetic = true; // set to true to prevent physics calculations.
         
+        RigidBody cube2body = new RigidBody(cube2);
+        cube2body.kinetic = true;
+        
+        BoxCollider cubeCollider = new BoxCollider(cubebody);
+        BoxCollider cube2Collider = new BoxCollider(cube2body);
+        chunkbody.kinetic = true; // set to true to prevent physics calculations.
 
         while (engine.isRunning()) {
             FatherTime.updateTime();
@@ -60,7 +71,13 @@ public class CS445FinalProject {
             
             // Push Mesh calls in here.
             engine.push(cube);
+            engine.push(cube2);
             engine.push(chunk);
+            
+            // Test the physics engine cubes interacting with eachother.
+            if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
+                cube2.position.x += 1.0f * FatherTime.deltaTime();
+            }
             
             // Start the rendering!
             engine.render();
