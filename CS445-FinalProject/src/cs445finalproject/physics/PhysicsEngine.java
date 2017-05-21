@@ -34,7 +34,9 @@ public class PhysicsEngine implements Runnable {
             Physics.initPhysics();
             PhysicsEngine physics = new PhysicsEngine();
             running = true;
-            new Thread(physics).start();
+            Thread thr = new Thread(physics);
+            thr.setDaemon(true);
+            thr.start();
         }
     }
     

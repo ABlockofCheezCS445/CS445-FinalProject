@@ -21,7 +21,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import cs445finalproject.physics.*;
 
 /**
  * Rendering engine that handles all of the OpenGL calls.
@@ -50,8 +49,6 @@ public class RenderEngine {
      * The command list used to render onto the screen.
      */
     private List<Mesh> commandlist;
-    
-    private Thread thr;
    
     
     RenderEngine(int winx, int winy) {
@@ -89,6 +86,7 @@ public class RenderEngine {
      */
     private void initGL() {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         GLU.gluPerspective(100.0f, 
@@ -102,8 +100,9 @@ public class RenderEngine {
         // Cull mode to save 50% of performance.
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
-        glFrontFace(GL_CW);
-        
+        glFrontFace(GL_CW);       
+        glEnable(GL_LIGHTING);
+   
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -146,7 +145,6 @@ public class RenderEngine {
     public void render() {
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        
         for (int i = 0; i < commandlist.size(); ++i) {
             Mesh mesh = commandlist.get(i);
             if (mesh.renderable) {
@@ -167,6 +165,7 @@ public class RenderEngine {
                 glPopMatrix();
             }
         }
+        
         
         Display.update();
         Display.sync(60);

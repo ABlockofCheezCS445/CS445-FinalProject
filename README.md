@@ -32,6 +32,11 @@ repeat
 ```
 It is not a super clean algorithm, as it can be broken down even further for more power, but this will suffice enough for our project!
 
+# Basic Physics Engine Dev
+There is a physics engine implementation written, it is rather basic and not optimized. It runs on a separate thread and performs O(n)
+time (which is normal), but if colliders are present, the time jumps to O(n^2) (horrid). If up to the task, implementing a sweep and 
+prune technique can help HUGELY with the physics calculations.
+
 # To Contribute
 Simply git clone this repository, this will create a git clone to the remote repository.
 

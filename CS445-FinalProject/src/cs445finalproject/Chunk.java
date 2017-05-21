@@ -33,7 +33,7 @@ public class Chunk extends Mesh {
     /**
      * The chunk size in cubes.
      */
-    private static final int CHUNK_SIZE = 30;
+    private static final int CHUNK_SIZE = 50;
     /**
      * The overall length of the cube.
      */
@@ -96,18 +96,28 @@ public class Chunk extends Mesh {
         for (int x = 0; x < CHUNK_SIZE; ++x) {
             for (int y = 0; y < CHUNK_SIZE; ++y) {
                 for (int z = 0; z < CHUNK_SIZE; ++z) {
-                    if (r.nextFloat() > 0.7f) {
-                        Blocks[x][y][z] = 
-                                new Block(Block.BlockType.BlockType_Grass);
-                    } else if (r.nextFloat() > 0.4f) {
-                        Blocks[x][y][z] = 
-                               new Block(Block.BlockType.BlockType_Dirt);
-                    } else if (r.nextFloat() > 0.2f) {
-                        Blocks[x][y][z] = 
-                                new Block(Block.BlockType.BlockType_Water);
+                    if (y > 2f) {
+                        if (r.nextFloat() > 0.99f) {
+                            Blocks[x][y][z] = 
+                                    new Block(Block.BlockType.BlockType_Water);
+                        } else if (r.nextFloat() > 0.9f) {
+                            Blocks[x][y][z] =
+                                    new Block(Block.BlockType.BlockType_Sand);
+                        } else {
+                            Blocks[x][y][z] =
+                                    new Block(Block.BlockType.BlockType_Grass);
+                        }
+                    } else if (y > 0f) {
+                        if (r.nextFloat() > 0.4f) {
+                            Blocks[x][y][z] = 
+                                    new Block(Block.BlockType.BlockType_Dirt);
+                        } else {
+                            Blocks[x][y][z] =
+                                    new Block(Block.BlockType.BlockType_Stone);
+                        }
                     } else {
                         Blocks[x][y][z] = 
-                                new Block(Block.BlockType.BlockType_Sand);
+                                new Block(Block.BlockType.BlockType_Bedrock);
                     }
                 }
             }
@@ -131,7 +141,7 @@ public class Chunk extends Mesh {
      * purpose: rebuilds the giant mesh object from scratch.
      */
     public void rebuildMesh(float startX, float startY, float startZ) {
-        SimplexNoise noise = new SimplexNoise(100, 0.45f, r.nextInt());
+        SimplexNoise noise = new SimplexNoise(100, 0.25f, r.nextInt());
         
         position = new Vector3(startX, startY, startZ);
         VBOColorHandle = glGenBuffers();
@@ -394,7 +404,7 @@ public class Chunk extends Mesh {
                 x + offset * 2, y + offset * 1
             };     
             // stone
-            case 4: return new float[] {
+            case 5: return new float[] {
                 //Bottom
                 x + offset * 4, y + offset * 2,
                 x + offset * 3, y + offset * 2,
@@ -432,7 +442,7 @@ public class Chunk extends Mesh {
                 x + offset * 4, y + offset * 1 
             };              
             // bedrock
-            case 5: return new float[] {
+            case 4: return new float[] {
                 //Bottom
                 x + offset * 4, y + offset * 2,
                 x + offset * 5, y + offset * 2,
@@ -471,5 +481,18 @@ public class Chunk extends Mesh {
             };                 
         }
         return null;
+    }
+    
+    
+    public void createWaterPatch(int sx, int sy, int sz, int size) {
+        if (size > 0) {
+            for (int x = sx; x < CHUNK_SIZE; ++x) {
+                for (int y = sy; y < CHUNK_SIZE; ++y) {
+                    for (int z = sz; z < CHUNK_SIZE; ++z) {
+                        
+                    }
+                } 
+            }
+        }
     }
 }
