@@ -13,8 +13,12 @@
 package cs445finalproject;
 
 import cs445finalproject.noise.*;
+import cs445finalproject.physics.PhysicsEngine;
+import cs445finalproject.physics.RigidBody;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 import org.lwjgl.BufferUtils;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL15;
@@ -72,8 +76,7 @@ public class Chunk extends Mesh {
         glBindBuffer(GL_ARRAY_BUFFER, VBOTextureHandle);
         glBindTexture(GL_TEXTURE_2D, 1);
         glTexCoordPointer(2, GL_FLOAT, 0, 0L);
-        
-        
+     
         glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
         glVertexPointer(3, GL_FLOAT, 0, 0L);
 
@@ -92,10 +95,11 @@ public class Chunk extends Mesh {
     public void initialize() {
         r = new Random();
 
+        
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
-        for (int x = 0; x < CHUNK_SIZE; ++x) {
-            for (int y = 0; y < CHUNK_SIZE; ++y) {
-                for (int z = 0; z < CHUNK_SIZE; ++z) {
+        for (int x = 0; x < Blocks.length; ++x) {
+            for (int y = 0; y < Blocks[0].length; ++y) {
+                for (int z = 0; z < Blocks[0][0].length; ++z) {
                     if (y > 2f) {
                         if (r.nextFloat() > 0.99f) {
                             Blocks[x][y][z] = 
@@ -149,16 +153,18 @@ public class Chunk extends Mesh {
         VBOTextureHandle = glGenBuffers();
         FloatBuffer VertexPositionData = 
                 BufferUtils.createFloatBuffer(
-                        (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
+                        (Blocks.length * Blocks[0].length * Blocks[0][0].length) * 6 * 12);
         FloatBuffer VertexColorData = 
                 BufferUtils.createFloatBuffer(
-                        (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
+                        (Blocks.length * Blocks[0].length * Blocks[0][0].length) * 6 * 12);
         FloatBuffer VertexTextureData =
                 BufferUtils.createFloatBuffer(
-                        (CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
+                        (Blocks.length * Blocks[0].length * Blocks[0][0].length) * 6 * 12);
         for (float x = 0; x < CHUNK_SIZE; x += 1) {
             for (float z = 0; z < CHUNK_SIZE; z += 1) {
-                float height = Math.abs(startY + (int )(CHUNK_SIZE * noise.getNoise((int )x, (int )z)) * 1);
+                float height = Math.abs(startY + (int )(CHUNK_SIZE * 
+                        noise.getNoise((int )x, (int )z)) * 1);
+                
                 for (float y = 0; y <= height; y++) {
                     VertexPositionData.put(createCube(
                             (float )(startX + x * CUBE_LENGTH), 
@@ -168,9 +174,13 @@ public class Chunk extends Mesh {
                             getCubeColor(Blocks[(int )x][(int )y][(int )z])));
                     VertexTextureData.put(createTexCube(
                             (float )0, (float )0, Blocks[(int )x][(int )y][(int )z]));
-                    // TODO(): Check height and see if at some height n, we will
-                    // add in a block material to define layers in our terrain.
-                    // 
+                    Blocks[(int )x][(int )y][(int )z].setCoords(new Vector3(
+                            (float )-(startX + x * CUBE_LENGTH), 
+                            (float )(y * CUBE_LENGTH + (int )(CHUNK_SIZE * 0.8f)),
+                            (float )-(startZ + z * CUBE_LENGTH)));
+                    if (y == height) {
+                        PhysicsEngine.push(Blocks[(int )x][(int )y][(int )z].getRigidBody());
+                    }
                 }
             }
         }

@@ -33,11 +33,10 @@ public class RigidBody {
     public Mesh mesh;
     public Collider collider;
     
-    public boolean kinetic = false;
+    public boolean kinematic = false;
     
     public RigidBody(Mesh observer, float m) {
         if (observer != null) {
-            PhysicsEngine.push(this);
             position = observer.position;
             mesh = observer;
         }

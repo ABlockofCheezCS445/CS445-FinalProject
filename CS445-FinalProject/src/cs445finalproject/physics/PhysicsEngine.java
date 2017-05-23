@@ -13,6 +13,7 @@
 ****************************************************************/
 package cs445finalproject.physics;
 
+import java.util.concurrent.Semaphore;
 import cs445finalproject.FatherTime;
 import cs445finalproject.Vector3;
 import java.util.ArrayList;
@@ -22,9 +23,10 @@ import java.util.ArrayList;
  * @author alexa
  */
 public class PhysicsEngine implements Runnable {
-    public static final String ENGINE_NAME = "ManlyRussianWomenBear Physics";
+    public static final String ENGINE_NAME = "Stupid Ass Physics";
     public static final String ENGINE_AUTH = "Somehthing";
     
+    private static Semaphore mutex = new Semaphore(1);
     private static ArrayList<RigidBody> rigidBodies = new ArrayList<>();
     private static volatile boolean running = false;
     private static boolean checkBuffer = false;
@@ -53,10 +55,12 @@ public class PhysicsEngine implements Runnable {
             if (checkBuffer) {
                 for (int i = 0; i < rigidBodies.size(); ++i) {
                     RigidBody rigidbody = rigidBodies.get(i);
-                    rigidbody.checkForMeshUpdates();
-                    if (!rigidbody.kinetic) {
-                        Calculate(rigidbody);
-                        rigidbody.update();
+                    if (rigidbody != null) {
+                        rigidbody.checkForMeshUpdates();
+                        if (!rigidbody.kinematic) {
+                            Calculate(rigidbody);
+                            rigidbody.update();
+                        }
                     }
                 }
                 checkBuffer = false;
@@ -73,6 +77,7 @@ public class PhysicsEngine implements Runnable {
     }
     
     public static void push(RigidBody rigidbody) {
+        
         rigidBodies.add(rigidbody);
     }
     
@@ -108,7 +113,7 @@ public class PhysicsEngine implements Runnable {
                 RigidBody other = rigidBodies.get(i);
                 if (other != rigidbody && other.collider != null) {
                     if (rigidbody.collider.hasCollided(other.collider)) {
-                        System.out.println("Collision has occured!");
+                        //System.out.println("Collision has occured!");
                         rigidbody.linearVelocity.y = 0.0f;
                     }
                 }
@@ -118,5 +123,9 @@ public class PhysicsEngine implements Runnable {
         rigidbody.position.x += rigidbody.linearVelocity.x * FatherTime.deltaTime();
         rigidbody.position.y += rigidbody.linearVelocity.y * FatherTime.deltaTime();
         rigidbody.position.z += rigidbody.linearVelocity.z * FatherTime.deltaTime();
+    }
+    
+    public static boolean removeRigidBody(RigidBody body) {
+        return rigidBodies.remove(body);
     }
 }

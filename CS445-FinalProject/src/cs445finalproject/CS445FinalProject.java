@@ -15,6 +15,8 @@ package cs445finalproject;
 import cs445finalproject.physics.BoxCollider;
 import cs445finalproject.physics.PhysicsEngine;
 import cs445finalproject.physics.RigidBody;
+import java.util.ArrayList;
+import java.util.Random;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL33;
 
@@ -28,7 +30,7 @@ public class CS445FinalProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        RenderEngine engine = new RenderEngine(640, 480);
+        RenderEngine engine = new RenderEngine(/*640, 480*/);
         PhysicsEngine.StartPhysics();
         Camera camera = new Camera();
         
@@ -40,18 +42,9 @@ public class CS445FinalProject {
         camera.setPosition(new Vector3(-20.0f, 50.0f, 10.0f));
 
         // Load up starting stuff...
-        Cube cube = new Cube();
-        Cube cube2 = new Cube();
-        cube.nameTag = "Ice Cube";
-        cube2.nameTag = "Eazy-E";
-        cube.position = new Vector3(-20.0f, 50.0f, 0.0f);
-        cube.initialize();
-        
-        cube2.position = new Vector3(-21.0f, 45.0f, 1.0f);
-        cube2.initialize();
         
         Light light = new Light();
-        light.nameTag = "Light One";
+        light.nameTag = "MC Ren";
         light.position = new Vector3(-30.0f, 50.0f, -70.0f);
         light.initialize();
         
@@ -59,16 +52,17 @@ public class CS445FinalProject {
         chunk.nameTag = "Dr. Dre";
         chunk.initialize();
         
-        RigidBody cubebody = new RigidBody(cube);
-        RigidBody chunkbody = new RigidBody(chunk, 1000.0f);
-        
-        cubebody.addForce(new Vector3(0.0f, -200.0f, 0.0f));
-        RigidBody cube2body = new RigidBody(cube2);
-        //cube2body.kinetic = true;
-        
-        BoxCollider cubeCollider = new BoxCollider(cubebody);
-        BoxCollider cube2Collider = new BoxCollider(cube2body);
-        chunkbody.kinetic = true; // set to true to prevent physics calculations.
+        ArrayList<Cube> cubes = new ArrayList<>();
+        Random r = new Random();
+        for (int i = 0; i < 1000; ++i) {
+            Cube c = new Cube();
+            c.position = new Vector3(r.nextFloat() * 100f - 80f, r.nextFloat() * 200f, r.nextFloat() * 100f - 80f);
+            c.initialize();
+            
+            PhysicsEngine.push(c.getRigidBody());
+            
+            cubes.add(c);
+        }
 
         float t = 0.0f;
         while (engine.isRunning()) {
@@ -78,10 +72,12 @@ public class CS445FinalProject {
             engine.update();
             
             // Push Mesh calls in here.
-            engine.push(cube);
-            engine.push(cube2);
             engine.push(chunk);
             engine.push(light);
+            
+            for (int i = 0; i < cubes.size(); ++i) {
+                engine.push(cubes.get(i));
+            }
             
             // Start the rendering!
             engine.render();

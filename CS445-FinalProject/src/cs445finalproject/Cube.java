@@ -12,6 +12,8 @@
 ****************************************************************/
 package cs445finalproject;
 
+import cs445finalproject.physics.BoxCollider;
+import cs445finalproject.physics.RigidBody;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,9 @@ import org.lwjgl.opengl.GL20;
  */
 public class Cube extends Mesh {
     private int vbo, colorVBO;
+    
+    private RigidBody rigidbody;
+    private BoxCollider collider;
     
     public Cube() {
         vbo = -1;
@@ -180,5 +185,12 @@ public class Cube extends Mesh {
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, colorVBO);
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, color, GL15.GL_STATIC_DRAW);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+        
+        rigidbody = new RigidBody(this);
+        collider = new BoxCollider(rigidbody);
     }   
+    
+    public RigidBody getRigidBody() {
+        return rigidbody;
+    }
 }

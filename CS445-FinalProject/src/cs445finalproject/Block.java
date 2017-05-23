@@ -12,11 +12,19 @@
 ****************************************************************/
 package cs445finalproject;
 
+import cs445finalproject.physics.BoxCollider;
+import cs445finalproject.physics.PhysicsEngine;
+import cs445finalproject.physics.RigidBody;
+
 /**
  * Block is the fundamental building block of our voxel engine terrain for
  * Chunk.
  */
 public class Block {
+    private Mesh mesh;
+    private RigidBody rigidbody;
+    private BoxCollider collider;
+    
     /**
      * Our block enum type, which defines how our textures for each block 
      * works.
@@ -74,8 +82,16 @@ public class Block {
      * purpose: The block constructors.
      */
     public Block(BlockType type) {
+        coords = new Vector3();
         Type = type;
         isActive = true;
+        mesh = new Cube();
+        mesh.position = coords;
+        mesh.initialize();
+        
+        rigidbody = new RigidBody(mesh);
+        collider = new BoxCollider(rigidbody);
+        rigidbody.kinematic = true;
     }
     
     /**
@@ -84,6 +100,7 @@ public class Block {
      */
     public void setCoords(Vector3 newPos) {
         coords = newPos;
+        mesh.position = coords;
     }
     
     /**
@@ -108,5 +125,10 @@ public class Block {
      */
     public int getID() {
         return Type.GetID();
+    }
+    
+    
+    public RigidBody getRigidBody() {
+        return rigidbody;
     }
 }
