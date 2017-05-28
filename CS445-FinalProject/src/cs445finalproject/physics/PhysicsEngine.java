@@ -23,6 +23,7 @@ import java.util.ArrayList;
  * @author alexa
  */
 public class PhysicsEngine implements Runnable {
+
     public static final String ENGINE_NAME = "Stupid Ass Physics";
     public static final String ENGINE_AUTH = "Somehthing";
     
@@ -60,12 +61,13 @@ public class PhysicsEngine implements Runnable {
                         if (!rigidbody.kinematic) {
                             Calculate(rigidbody);
                             rigidbody.update();
+                            rigidbody.detectCollision = false;
                         }
                     }
                 }
                 checkBuffer = false;
             }
-            
+            SweepAndPrune();
         }
         System.out.println("Physics Engine cleaned up!");
         System.out.println("Physics Engine Thread closing...");
@@ -91,6 +93,7 @@ public class PhysicsEngine implements Runnable {
      * @param rigidbody 
      */
     private static void Calculate(RigidBody rigidbody) {
+        rigidbody.detectCollision = true;
         //
         // TODO(): this is where we will check if any collisions have occured?
         //
@@ -108,7 +111,7 @@ public class PhysicsEngine implements Runnable {
         // TODO(Mario): 
         // Check collisions (this will cause O(n^2) performance for each object,
         // so technically O(n^3) at worst case, need to figure our how to prune!
-        if (rigidbody.collider != null) {
+        if (rigidbody.collider != null && rigidbody.detectCollision) {
             for (int i = 0; i < rigidBodies.size(); ++i) {
                 RigidBody other = rigidBodies.get(i);
                 if (other != rigidbody && other.collider != null) {
@@ -127,5 +130,9 @@ public class PhysicsEngine implements Runnable {
     
     public static boolean removeRigidBody(RigidBody body) {
         return rigidBodies.remove(body);
+    }
+    
+    private static void SweepAndPrune() {
+        
     }
 }

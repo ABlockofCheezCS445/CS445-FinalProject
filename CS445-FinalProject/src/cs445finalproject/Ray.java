@@ -1,8 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************
+* File: Ray.java
+* Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
+* Class: CS445 - Computer Graphics
+*
+* assignment: Final Project - Checkpoint Assignment # 3
+* date last modified: 5/28/2017
+*
+* purpose: Ray mathematical object, used to represent an endpoint,
+* and a direction, with infinite length.
+*
+****************************************************************/
 package cs445finalproject;
 
 /**

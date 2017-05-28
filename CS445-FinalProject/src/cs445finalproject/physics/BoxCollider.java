@@ -17,30 +17,35 @@ package cs445finalproject.physics;
  * TODO(): Will be implementing AABB collision detection.
  */
 public class BoxCollider implements Collider {
-    public float width;
-    public float height;
-    public float depth;
+    public EndPoint xNegWidth, xPosWidth;
+    public EndPoint yNegHeight, yPosHeight;
+    public EndPoint zNegDepth, zPosDepth;
     public RigidBody rigidbody;
     
-    public BoxCollider(RigidBody body, float width, float height, float depth) {
-        this.height = height;
-        this.width = width;
+    /**
+     * Assigned local space.
+     * @param body
+     * @param xneg
+     * @param xpos
+     * @param yneg
+     * @param ypos
+     * @param zneg
+     * @param zpos 
+     */
+    public BoxCollider(RigidBody body, float xneg, float xpos, 
+            float yneg, float ypos, float zneg, float zpos) {
+        xNegWidth = new EndPoint(this, xneg, true);
+        xPosWidth = new EndPoint(this, xpos, false);
+        yNegHeight = new EndPoint(this, yneg, true);
+        yPosHeight = new EndPoint(this, ypos, false);
+        zNegDepth = new EndPoint(this, zneg, true);
+        zPosDepth = new EndPoint(this, zpos, false);
         this.rigidbody = body;
-        this.depth = depth;
         body.collider = this;
     }
     
-    public BoxCollider(RigidBody body, float width, float height) {
-        this(body, width, height, 2.0f);
-    }
-    
-    
-    public BoxCollider(RigidBody body, float width) {
-        this(body, width, 2.0f, 2.0f);
-    }
-    
     public BoxCollider(RigidBody body) {
-        this(body, 2.0f, 2.0f, 2.0f);
+        this(body, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
     }
 
     @Override
@@ -49,31 +54,23 @@ public class BoxCollider implements Collider {
             case BOX: 
             {
                 BoxCollider box = (BoxCollider )collider;
-                // AABB.
-                float halfWidth = width / 2;
-                float halfHeight = height / 2;
-                float halfDepth = depth / 2;
-                
-                float halfWidthOther = box.width / 2;
-                float halfHeightOther = box.height / 2;
-                float halfDepthOther = box.depth / 2;
                 
                 // AABB1
-                float xMin = rigidbody.position.x - halfWidth;
-                float yMin = rigidbody.position.y - halfHeight;
-                float zMin = rigidbody.position.z - halfDepth;
+                float xMin = rigidbody.position.x + xNegWidth.value;
+                float yMin = rigidbody.position.y + yNegHeight.value;
+                float zMin = rigidbody.position.z + zNegDepth.value;
                 
-                float xMax = rigidbody.position.x + halfDepth;
-                float yMax = rigidbody.position.y + halfHeight;
-                float zMax = rigidbody.position.z + halfDepth;
+                float xMax = rigidbody.position.x + xPosWidth.value;
+                float yMax = rigidbody.position.y + yPosHeight.value;
+                float zMax = rigidbody.position.z + zPosDepth.value;
                 
-                float x1Min = box.rigidbody.position.x - halfWidthOther;
-                float y1Min = box.rigidbody.position.y - halfHeightOther;
-                float z1Min = box.rigidbody.position.z - halfDepthOther;
+                float x1Min = box.rigidbody.position.x + box.xNegWidth.value;
+                float y1Min = box.rigidbody.position.y + box.yNegHeight.value;
+                float z1Min = box.rigidbody.position.z + box.zNegDepth.value;
                 
-                float x1Max = box.rigidbody.position.x + halfWidthOther;
-                float y1Max = box.rigidbody.position.y + halfHeightOther;
-                float z1Max = box.rigidbody.position.z + halfDepthOther;
+                float x1Max = box.rigidbody.position.x + box.xPosWidth.value;
+                float y1Max = box.rigidbody.position.y + box.yPosHeight.value;
+                float z1Max = box.rigidbody.position.z + box.zPosDepth.value;
                 
                 if (xMax < x1Min || xMin > x1Max) return false;    
                 if (yMax < y1Min || yMin > y1Max) return false;

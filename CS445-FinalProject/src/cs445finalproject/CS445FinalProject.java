@@ -54,7 +54,7 @@ public class CS445FinalProject {
         
         ArrayList<Cube> cubes = new ArrayList<>();
         Random r = new Random();
-        for (int i = 0; i < 1000; ++i) {
+        for (int i = 0; i < 200; ++i) {
             Cube c = new Cube();
             c.position = new Vector3(r.nextFloat() * 100f - 80f, r.nextFloat() * 200f, r.nextFloat() * 100f - 80f);
             c.initialize();

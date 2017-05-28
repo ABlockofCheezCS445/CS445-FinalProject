@@ -10,6 +10,18 @@ package cs445finalproject.physics;
  * @author alexa
  */
 public interface Collider {
+    public class EndPoint {
+        public Collider collider;
+        public float value;
+        public boolean isMin;
+        
+        public EndPoint(Collider coll, float value, boolean min) {
+            collider = coll;
+            this.value = value;
+            isMin = min;
+        }
+    }
+    
     public enum ColliderShape { BOX, SPHERE, CYLINDER };
     
     public boolean hasCollided(Collider collider);

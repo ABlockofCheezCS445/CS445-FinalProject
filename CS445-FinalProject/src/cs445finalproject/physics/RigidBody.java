@@ -34,6 +34,7 @@ public class RigidBody {
     public Collider collider;
     
     public boolean kinematic = false;
+    public boolean detectCollision = false;
     
     public RigidBody(Mesh observer, float m) {
         if (observer != null) {
