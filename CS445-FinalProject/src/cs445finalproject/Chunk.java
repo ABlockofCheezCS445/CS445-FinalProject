@@ -37,7 +37,7 @@ public class Chunk extends Mesh {
     /**
      * The chunk size in cubes.
      */
-    private static final int CHUNK_SIZE = 50;
+    private static final int CHUNK_SIZE = 30;
     /**
      * The overall length of the cube.
      */
