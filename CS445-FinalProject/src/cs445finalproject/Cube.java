@@ -3,7 +3,7 @@
 * Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
 * Class: CS445 - Computer Graphics
 *
-* assignment: Final Project - Checkpoint Assignment # 1
+* assignment: Final Project - Checkpoint Assignment # 3
 * date last modified: 5/8/2017
 *
 * purpose: The cube mesh object. This object identifies the cube and

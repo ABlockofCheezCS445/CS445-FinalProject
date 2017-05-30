@@ -1,17 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************
+* File: CS445FinalProject.java
+* Authors: Sofia Barraza, Shaylyn Wetts, Christopher Sanchez, Mario Garcia.
+* Class: CS445 - Computer Graphics
+*
+* assignment: Final Project - Checkpoint Assignment # 3
+* date last modified: 5/20/2017
+*
+* purpose: Provides light to map
+*
+****************************************************************/
 package cs445finalproject;
 import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import static org.lwjgl.opengl.GL11.*;
 
-/**
- *
- * @author alexa
- */
+
 public class Light extends Mesh {
     private static int lightCount = 0;
     

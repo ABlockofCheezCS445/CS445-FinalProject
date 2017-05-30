@@ -4,7 +4,7 @@
 * Class: CS445 - Computer Graphics
 *
 * assignment: Final Project - Checkpoint Assignment # 3
-* date last modified: 5/20/2017
+* date last modified: 5/29/2017
 *
 * purpose: Main output program, where we set up the RenderEngine, initialize it, 
 * and run it by pushing our meshes into it for drawing.
@@ -20,10 +20,7 @@ import java.util.Random;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL33;
 
-/**
- *
- * @author alexa
- */
+
 public class CS445FinalProject {
 
     /**
